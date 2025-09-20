@@ -42,6 +42,7 @@ const CheckOut = () => {
   const deliveryFee = totalAmount > 500 ? 0 : 40;
   const amountWithDeliveryFee = totalAmount + deliveryFee;
 
+  //
   const defaultLocation = { lat: 28.6139, lon: 77.209 }; // ya city center
   const centerLocation =
     location?.lat && location?.lon ? location : defaultLocation;
@@ -73,18 +74,44 @@ const CheckOut = () => {
   const getCurrentLocation = async () => {
     setLoading(true);
     try {
-      const latitude = loggedUser?.location?.coordinates[1];
-      const longitude = loggedUser?.location?.coordinates[0];
+      let latitude, longitude;
+
+      if (loggedUser?.location?.coordinates) {
+        latitude = loggedUser.location.coordinates[1];
+        longitude = loggedUser.location.coordinates[0];
+      } else if (navigator.geolocation) {
+        // Browser geolocation for new users
+        await new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              latitude = position.coords.latitude;
+              longitude = position.coords.longitude;
+              resolve();
+            },
+            (err) => {
+              console.error(err);
+              toast.error("Could not get current location.");
+              reject(err);
+            }
+          );
+        });
+      } else {
+        toast.error("Geolocation is not supported by this browser.");
+        setLoading(false);
+        return;
+      }
+
       dispatch(
         setLocation({
           lat: latitude,
           lon: longitude,
         })
       );
+
       await getAddressByLatlon();
-      setLoading(false);
     } catch (error) {
       console.log(error);
+    } finally {
       setLoading(false);
     }
   };
@@ -109,6 +136,7 @@ const CheckOut = () => {
   }, [address]);
 
   useEffect(() => {
+    //
     if (!location?.lat || !location?.lon) {
       getCurrentLocation();
     }
