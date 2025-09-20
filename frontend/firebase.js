@@ -7,9 +7,12 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyBQMILXsXesonYXdAcIEj9uCFDPc_RSRLI',
-  authDomain: "foodingo-2c3b8.firebaseapp.com",
-  projectId: "foodingo-2c3b8",
-  storageBucket: "foodingo-2c3b8.firebasestorage.app",
+  // authDomain: "foodingo-2c3b8.firebaseapp.com",
+  authDomain: "foodingo-79b62.firebaseapp.com",
+  // projectId: "foodingo-2c3b8",
+  projectId: "foodingo-79b62",
+  // storageBucket: "foodingo-2c3b8.firebasestorage.app",
+  storageBucket: "foodingo-79b62.appspot.com",
   messagingSenderId: "495102796463",
   appId: "1:495102796463:web:782127e565be7c96aa2a5a",
 };
