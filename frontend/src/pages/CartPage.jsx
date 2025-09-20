@@ -49,7 +49,10 @@ const CartPage = () => {
               </div>
 
               {/* Checkout Button */}
-              <button onClick={()=>navigate('/check-out')} className=" sm:py-2 sm:px-3 p-1 text-sm sm:text-md rounded-2xl bg-[#ff4d2d] text-white font-semibold hover:bg-[#e04326] transition">
+              <button
+                onClick={() => navigate("/check-out")}
+                className=" sm:py-2 sm:px-3 p-1 text-sm sm:text-md rounded-2xl bg-[#ff4d2d] text-white font-semibold hover:bg-[#e04326] transition"
+              >
                 Proceed to Checkout
               </button>
             </div>

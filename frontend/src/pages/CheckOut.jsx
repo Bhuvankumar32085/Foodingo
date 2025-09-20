@@ -42,6 +42,10 @@ const CheckOut = () => {
   const deliveryFee = totalAmount > 500 ? 0 : 40;
   const amountWithDeliveryFee = totalAmount + deliveryFee;
 
+  const defaultLocation = { lat: 28.6139, lon: 77.209 }; // ya city center
+  const centerLocation =
+    location?.lat && location?.lon ? location : defaultLocation;
+
   const onDragEnd = (e) => {
     dispatch(
       setLocation({
@@ -104,6 +108,12 @@ const CheckOut = () => {
     setAddressInput(address);
   }, [address]);
 
+  useEffect(() => {
+    if (!location?.lat || !location?.lon) {
+      getCurrentLocation();
+    }
+  }, []);
+
   const placeOrderHandler = async () => {
     setOrderLoading(true);
     try {
@@ -162,7 +172,6 @@ const CheckOut = () => {
           toast.error(error.response.data.message);
         }
       },
-
     };
     const rzp = new window.Razorpay(options);
     rzp.open();
@@ -216,7 +225,7 @@ const CheckOut = () => {
           </div>
           <div className=" rounded-xl border overflow-hidden">
             <div className="h-64 w-full flex items-center justify-center">
-              <MapContainer
+              {/* <MapContainer
                 className="w-full h-full"
                 center={[location?.lat, location?.lon]}
                 zoom={16}
@@ -231,7 +240,27 @@ const CheckOut = () => {
                   draggable
                   eventHandlers={{ dragend: onDragEnd }}
                 />
-              </MapContainer>
+              </MapContainer> */}
+              {centerLocation.lat && centerLocation.lon ? (
+                <MapContainer
+                  center={[centerLocation.lat, centerLocation.lon]}
+                  zoom={16}
+                  className="w-full h-64 sm:h-96"
+                >
+                  <TileLayer
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    attribution="&copy; OpenStreetMap contributors"
+                  />
+                  <RecenterMap location={centerLocation} />
+                  <Marker
+                    position={[centerLocation.lat, centerLocation.lon]}
+                    draggable
+                    eventHandlers={{ dragend: onDragEnd }}
+                  />
+                </MapContainer>
+              ) : (
+                <p className="text-gray-500 text-center">Loading map...</p>
+              )}
             </div>
           </div>
         </section>
