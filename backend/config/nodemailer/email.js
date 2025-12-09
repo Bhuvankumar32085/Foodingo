@@ -4,15 +4,17 @@ import {
   sendDeliveredOtpHtmlContent,
   welcomeEmailHtml,
 } from "./htmlEmail.js";
-import transporter from "./nodemailer.js";
+import { resend } from "./nodemailer.js";
+// import transporter from "./nodemailer.js";
+// resend
 
-const FROM_EMAIL = process.env.MAIL_ID;
+const FROM_EMAIL = "Acme <onboarding@resend.dev>";
 
 export const sendOtpOnEmail = async (email, otp) => {
   const html = resetPasswordHtml.replace("{resetToken}", otp);
 
   try {
-    await transporter.sendMail({
+    await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: "Reset your Password",
@@ -28,7 +30,7 @@ export const sendOtpForEmailVerification = async (email, otp) => {
   const html = emailVerificationHtml.replace("{verificationCode}", otp);
 
   try {
-    await transporter.sendMail({
+    await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: "Email Verification",
@@ -44,7 +46,7 @@ export const sendWelcom = async (email, fullName) => {
   const html = welcomeEmailHtml(fullName);
 
   try {
-    await transporter.sendMail({
+    await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: "Welcome back to Foodingo!",
@@ -60,7 +62,7 @@ export const sendDeliveredOtp = async (email, otp) => {
   const html = sendDeliveredOtpHtmlContent.replace("{deliveryOtp}", otp);
 
   try {
-    await transporter.sendMail({
+    await resend.emails.send({
       from: FROM_EMAIL,
       to: email,
       subject: "Confirm Your Foodingo Delivery",
