@@ -178,6 +178,7 @@ export const signIn = async (req, res) => {
       user,
     });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({
       success: false,
       message: "SignIn error",

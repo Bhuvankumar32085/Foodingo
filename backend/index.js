@@ -20,7 +20,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 const io = new Server(server, {
   cors: {
-    origin: "https://foodingo-9rf7.onrender.com",
+    origin: "https://foodingo-g39f.onrender.com",
     credentials: true,
     methods: ["POST", "PUT", "GET", "DELETE"],
   },
