@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "https://foodingo-9rf7.onrender.com/api",
+  baseURL: "https://foodingo-g39f.onrender.com/api",
   withCredentials: true,
 });
 
