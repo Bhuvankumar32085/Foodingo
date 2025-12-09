@@ -29,7 +29,7 @@ app.set("io", io);
 
 app.use(
   cors({
-    origin: "https://foodingo-9rf7.onrender.com",
+    origin: "https://foodingo-g39f.onrender.com",
     credentials: true,
   })
 );
